@@ -1,27 +1,27 @@
 package ro.andreistoian.SpringNotes.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ro.andreistoian.SpringNotes.models.Note;
+import ro.andreistoian.SpringNotes.models.User;
 import ro.andreistoian.SpringNotes.services.UserService;
+import java.security.Principal;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
+@Slf4j
 public class MainController {
 
     @Autowired
     UserService service;
 
     @RequestMapping(value = "/")
-    public String getNotes(Model model)
+    public String getNotes(Model model, Principal principal)
     {
-        List<Note> noteList = new ArrayList<>();
-        service.listAll().forEach(u -> noteList.addAll(u.getNotes()));
-        model.addAttribute("notes", noteList);
+        User user = service.getByUserName(principal.getName());
+        model.addAttribute("notes", user.getNotes());
         return "notes";
     }
 

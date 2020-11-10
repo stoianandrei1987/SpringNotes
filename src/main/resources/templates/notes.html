@@ -6,6 +6,14 @@
 </head>
 <body>
 <div id="create-btn">
+
+    <a href="javascript: document.logoutForm.submit()" role="menuitem"> Logout</a>
+
+    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+        <input hidden type="submit" value="Sign Out"/>
+    </form>
+
+
     <a href="new">Create new note!</a>
 </div>
 <div id="table-divs">
